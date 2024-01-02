@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Reservasi Ruang Diskusi
- * Plugin URI: https://github.com/nazaralwi
+ * Plugin URI: https://github.com/nazaralwi/DiscussionRoomReservation
  * Description: Plugin untuk Reservasi Ruang Diskusi
  * Version: 1.0.0
  * Author: Nazar Alwi
