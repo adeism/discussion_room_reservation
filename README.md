@@ -1,9 +1,10 @@
 # Reservasi Ruang Diskusi
 
 ### Cara Install Plugin
-1. Klik Code > Download Zip
-2. Ekstrak file .zip nya ke folder `plugins/` yang ada di folder utama SLiMS Anda
-3. Masuk modul **System** masuk menu **Plugins**. Cari plugin dengan nama **Reservasi Ruang Diskusi** kemudian aktifkan pluginnya.
+1. Klik Code > Download Zip.
+2. Ekstrak file .zip nya ke folder `plugins/` yang ada di folder utama SLiMS Anda. Pastikan nama folder atau _directory_-nya adalah `discussion_room_reservation` (tanpa _postfix_ `-master`).
+3. Jalankan perintah `composer install` pada folder atau _directory_ `plugins/discussion_room_reservation`.
+4. Masuk modul **System** masuk menu **Plugins**. Cari plugin dengan nama **Reservasi Ruang Diskusi** kemudian aktifkan pluginnya.
 
 ### File structure
 ![File Structure](docs/file_structure.png)
