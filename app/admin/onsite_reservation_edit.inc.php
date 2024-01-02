@@ -124,7 +124,8 @@ echo '<script>
 
         const selectedDate = document.getElementById(\'reservationDate\').value;
 
-        fetch(\'http://localhost/slims9_bulian/index.php?p=populate_schedule\', {
+        const mainPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf(\'/admin\'));
+        fetch(mainPath + \'/index.php?p=populate_schedule\', {
             method: \'POST\',
             headers: {
                 \'Content-Type\': \'application/x-www-form-urlencoded\',

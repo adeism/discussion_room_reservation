@@ -2,7 +2,7 @@
 use SLiMS\Filesystems\Storage;
 
 require DRRB . DS . 'lib/vendor/autoload.php';
-require DRRB . DS . 'app/Models/Reservation.php';
+require DRRB . DS . 'app/models/Reservation.php';
 require DRRB . DS . 'app/helper/common.php';
 
 function reserveScheduleOnsite($self)
