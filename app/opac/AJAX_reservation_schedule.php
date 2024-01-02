@@ -5,9 +5,9 @@ require 'calendar.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newDate'])) {
   $newDate = $_POST["newDate"];
 
-  $calendar->display($newDate, 'grey');
+  displayCalendarForDate($calendar, $newDate);
 } else {
-  $calendar->display(date('Y-m-d'), 'grey');
+  displayCalendarForDate($calendar, date('Y-m-d'));
 }
 exit;
 ?>

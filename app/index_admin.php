@@ -1,5 +1,5 @@
 <?php
-defined('INDEX_AUTH') OR die('Direct access not allowed!');
+defined('INDEX_AUTH') or die('Direct access not allowed!');
 
 // IP based access limitation
 require LIB . 'ip_based_access.inc.php';
@@ -23,8 +23,6 @@ if (!$can_read) {
     die('<div class="errorBox">' . __('You are not authorized to view this section') . '</div>');
 }
 
-use DiscussionRoomReservation\Lib\Url;
-
 $page_title = 'Reservasi Ruang Diskusi';
 
 updateStatusForExpiredReservations();
@@ -37,12 +35,16 @@ cancelReservation(getCurrentUrl(['reservationScheduleList' => 1]));
 <div class="menuBox">
     <div class="menuBoxInner memberIcon">
         <div class="per_title">
-            <h2><?= $page_title ?></h2>
+            <h2>
+                <?= $page_title ?>
+            </h2>
         </div>
         <div class="sub_section">
             <div class="btn-group">
-                <a href="<?= getCurrentUrl(['reservationScheduleList' => 1]) ?>" class="btn btn-primary">Daftar Jadwal Reservasi</a>
-                <a href="<?= getCurrentUrl(['reservationScheduleHistoryList' => 1]) ?>" class="btn btn-primary">Daftar Riwayat Reservasi</a>
+                <a href="<?= getCurrentUrl(['reservationScheduleList' => 1]) ?>" class="btn btn-primary">Daftar Jadwal
+                    Reservasi</a>
+                <a href="<?= getCurrentUrl(['reservationScheduleHistoryList' => 1]) ?>" class="btn btn-primary">Daftar
+                    Riwayat Reservasi</a>
                 <a href="<?= getCurrentUrl(['onsiteReservation' => 1]) ?>" class="btn btn-success">Reservasi Onsite</a>
             </div>
         </div>
@@ -52,23 +54,23 @@ cancelReservation(getCurrentUrl(['reservationScheduleList' => 1]));
 <?php
 switch (true) {
     case isset($_GET['onsiteReservation']):
-        include __DIR__ . '/admin/onsite_reservation_form.inc.php';
+        include DRRB . DS . 'app/admin/onsite_reservation_form.inc.php';
         break;
 
     case isset($_GET['reservationScheduleList']):
-        include __DIR__ . '/admin/onsite_reservation_grid.inc.php';
+        include DRRB . DS . 'app/admin/onsite_reservation_grid.inc.php';
         break;
 
     case isset($_GET['reservationScheduleHistoryList']):
-        include __DIR__ . '/admin/onsite_reservation_history_grid.inc.php';
+        include DRRB . DS . 'app/admin/onsite_reservation_history_grid.inc.php';
         break;
 
     case (isset($_POST['detail']) || (isset($_GET['editReservation']))):
-        include __DIR__ . '/admin/onsite_reservation_edit.inc.php';
+        include DRRB . DS . 'app/admin/onsite_reservation_edit.inc.php';
         break;
-    
+
     default:
-        include __DIR__ . '/admin/onsite_reservation_grid.inc.php';
+        include DRRB . DS . 'app/admin/onsite_reservation_grid.inc.php';
         break;
 }
 ?>

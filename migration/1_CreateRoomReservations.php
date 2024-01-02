@@ -1,13 +1,4 @@
 <?php
-/**
- * @author Drajat Hasan
- * @email drajathasan20@gmail.com
- * @create date 2022-03-28 10:28:36
- * @modify date 2022-03-28 10:31:11
- * @license GPLv3
- * @desc [description]
- */
-
 use SLiMS\DB;
 use SLiMS\Migration\Migration;
 

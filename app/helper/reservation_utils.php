@@ -1,20 +1,18 @@
 <?php
 use SLiMS\Filesystems\Storage;
 
-require DRRB . DS . 'lib/vendor/autoload.php';
 require DRRB . DS . 'app/models/Reservation.php';
-require DRRB . DS . 'app/helper/common.php';
 
 function reserveScheduleOnsite($self)
 {
-    if (isset($_POST['onsiteReservation'])) {
+    if (isset($_POST['reserve'])) {
         $reservation = new Reservation();
 
         $memberId = $_POST['memberID'];
         $reservation->name = $_POST['name'];
         $reservation->memberId = $memberId;
         $reservation->major = $_POST['major'];
-        $reservation->whatsAppNumber = formatWhatsAppNumberInto62Format($_POST['whatsAppNumber']);;
+        $reservation->whatsAppNumber = formatWhatsAppNumberInto62Format($_POST['whatsAppNumber']);
         $reservation->reservedDate = $_POST['reservationDate'];
         $reservation->duration = $_POST['duration'];
 
@@ -32,7 +30,7 @@ function reserveScheduleOnsite($self)
 
         $isFileUploaded = uploadFile($memberId);
         $reservation->reservationDocumentId = $isFileUploaded['insert_id'];
-        
+
         $result = $reservation->save();
 
         if ($isFileUploaded['message'] !== "No insertion is made") {
@@ -41,11 +39,10 @@ function reserveScheduleOnsite($self)
 
         if ($result['success'] === true) {
             utility::jsToastr('Reservasi onsite', $result['message'], 'success');
-            echo '<script>parent.$("#mainContent").simbioAJAX("'.$self.'")</script>';
+            echo '<script>parent.$("#mainContent").simbioAJAX("' . $self . '")</script>';
             exit();
         } else {
-            utility::jsToastr('Reservasi onsite', $result['message'], 'success');
-            echo '<script>parent.$("#mainContent").simbioAJAX("'.$self.'")</script>';
+            utility::jsToastr('Reservasi onsite', $result['message'], 'error');
             exit();
         }
     }
@@ -78,7 +75,7 @@ function reserveSchedule($self)
 
         $isFileUploaded = uploadFile($memberId);
         $reservation->reservationDocumentId = $isFileUploaded['insert_id'];
-        
+
         $result = $reservation->save();
 
         if ($isFileUploaded['message'] !== "No insertion is made") {
@@ -108,7 +105,7 @@ function updateReservation($self)
 
         $updateRecordID = $dbs->escape_string($_POST['updateRecordID']);
         $reservation = new Reservation();
-        
+
         // Reservation::getById($updateRecordID);
 
         if ($reservation) {
@@ -117,19 +114,19 @@ function updateReservation($self)
             $reservation->whatsAppNumber = formatWhatsAppNumberInto62Format($_POST['whatsAppNumber']);
             $reservation->reservedDate = $_POST['reservationDate'];
             $reservation->duration = $_POST['duration'];
-    
+
             $timeRange = $_POST['availableSchedule'];
             $times = explode(" - ", $timeRange);
             $reservation->startTime = $times[0];
             $reservation->endTime = $times[1];
-    
+
             $reservation->visitorNumber = $_POST['visitorNumber'];
             $reservation->activity = $_POST['activity'];
-    
+
             $timestamp = date('Y-m-d H:i:s');
             $reservation->reservation_date = $timestamp;
             $reservation->reservationLastUpdate = $timestamp;
-    
+
             $isFileUploaded = uploadFile($_POST['memberId']);
             $reservation->reservationDocumentId = $isFileUploaded['insert_id'];
 
@@ -141,10 +138,10 @@ function updateReservation($self)
 
             if ($result['success'] === true) {
                 utility::jsToastr('Reservasi onsite', $result['message'], 'success');
-                echo '<script>parent.$("#mainContent").simbioAJAX("'.$self.'")</script>';
+                echo '<script>parent.$("#mainContent").simbioAJAX("' . $self . '")</script>';
                 exit();
             } else {
-                utility::jsToastr('Reservasi onsite', $result['message'], 'success');
+                utility::jsToastr('Reservasi onsite', $result['message'], 'error');
                 exit();
             }
         } else {
@@ -184,16 +181,13 @@ function cancelReservationByMember($self)
         $delete = Reservation::deleteById($_POST['itemID']);
         $deleteDocument = deleteReservationDocument($_POST['itemID']); // Remove this if you wanna keep the reservation document
 
-        if ($delete && $deleteDocument) {
-            utility::jsToastr('Onsite Reservation', 'Berhasil membatalkan reservasi', 'success');
-            // echo '<script>parent.$("#mainContent").simbioAJAX("' . $self . '")</script>';
+        if ($delete) {
             echo '<script type="text/javascript">';
             echo 'alert("' . 'Berhasil' . '");';
             echo 'location.href = \'index.php?p=member&sec=discussion_room_reservation_tab\';';
             echo '</script>';
             exit();
         } else {
-            utility::jsToastr('Onsite Reservation', 'Gagal membatalkan reservasi', 'error');
             echo '<script type="text/javascript">';
             echo 'alert("' . 'Gagal' . '");';
             echo 'location.href = \'index.php?p=member&sec=discussion_room_reservation_tab\';';
@@ -203,7 +197,8 @@ function cancelReservationByMember($self)
     }
 }
 
-function getReservationByMemberId($memberId) {
+function getReservationByMemberId($memberId)
+{
     $reservation = new Reservation();
 
     return $reservation->retrieveReservationByMemberId($memberId);
@@ -274,13 +269,14 @@ function uploadFile($memberId)
     return ["success" => false, "message" => "No insertion is made", "insert_id" => 0];
 }
 
-function deleteReservationDocument($reservationId) {
+function deleteReservationDocument($reservationId)
+{
     $fileName = Reservation::getFileNameFromMemberId($reservationId);
 
     if ($fileName) {
         $repository = Storage::repository();
-        
-        $repository->delete('/'. $fileName);
+
+        $repository->delete('/' . $fileName);
         return true; // Return true if deletion is successful
     } else {
         return false; // Return false if file name retrieval fails
@@ -288,7 +284,8 @@ function deleteReservationDocument($reservationId) {
 
 }
 
-function updateStatusForExpiredReservations() {
+function updateStatusForExpiredReservations()
+{
     Reservation::updateStatusForExpiredReservations();
 }
 
@@ -304,14 +301,28 @@ function dirCheckPermission()
 
 function getCurrentUrl($query = [])
 {
-    
+
     return $_SERVER['PHP_SELF'] . '?' . http_build_query(array_merge(['mod' => $_GET['mod'], 'id' => $_GET['id']], $query));
 }
 
 function getMajorList()
 {
-    return ['S1 Teknik Informatika', 'S1 Software Engineering', 'S1 Sistem Informasi',
-        'S1 Sains Data', 'S1 Teknik Telekomunikasi', 'D3 Teknik Telekomunikasi', 'S1 Automation Technology',
-        'S1 Teknik Biomedis', 'S1 Teknologi Pangan', 'S1 Teknik Industri', 'S1 Desain Komunikasi Visual',
-        'S1 Digital Logistic', 'S1 Bisnis Digital', 'S1 Product Innovation', 'D3  Teknik Digital', 'Lainnya'];
+    return [
+        'S1 Teknik Informatika',
+        'S1 Software Engineering',
+        'S1 Sistem Informasi',
+        'S1 Sains Data',
+        'S1 Teknik Telekomunikasi',
+        'D3 Teknik Telekomunikasi',
+        'S1 Automation Technology',
+        'S1 Teknik Biomedis',
+        'S1 Teknologi Pangan',
+        'S1 Teknik Industri',
+        'S1 Desain Komunikasi Visual',
+        'S1 Digital Logistic',
+        'S1 Bisnis Digital',
+        'S1 Product Innovation',
+        'D3  Teknik Digital',
+        'Lainnya'
+    ];
 }

@@ -1,15 +1,13 @@
 <?php
-// Include your previous functions and definitions
-// Pakai library yang mendisable hari sebelumnya (contoh: KAI Access)
-// Cek di bootstrap
-require __DIR__ . '/../models/Reservation.php';
+require DRRB . DS . 'app/models/Reservation.php';
 
 define('START_TIME', '08:00');
 define('END_TIME', '16:00');
 
 date_default_timezone_set('Asia/Jakarta'); // Set the timezone to Jakarta/Western Indonesia Time (WIB)
 
-function generateAvailableSchedules($startDate, $durationInMinutes, $bookedSchedules) {
+function generateAvailableSchedules($startDate, $durationInMinutes, $bookedSchedules)
+{
     $currentTime = strtotime('now'); // Current date and time 2023-12-26 13:45
 
     // Set the start date to the current hour if it's in the past
@@ -18,7 +16,7 @@ function generateAvailableSchedules($startDate, $durationInMinutes, $bookedSched
 
         $hour = date('H', $currentTime);
         $min = 0;
-        
+
         if ($currentMinute >= 0 && $currentMinute < 15) {
             $min = 15;
         } else if ($currentMinute >= 15 && $currentMinute < 30) {
@@ -29,7 +27,7 @@ function generateAvailableSchedules($startDate, $durationInMinutes, $bookedSched
             $hour = date('H', strtotime('+1 hour', $currentTime));
             $min = 0;
         }
-        
+
         $startDate = strtotime(date('Y-m-d H:i', mktime($hour, $min, 0, date('m'), date('d'), date('Y'))));
     }
 
@@ -37,7 +35,7 @@ function generateAvailableSchedules($startDate, $durationInMinutes, $bookedSched
     $dayOfWeek = date('w', $startDate);
     if ($dayOfWeek == 0 || $dayOfWeek == 6) {
         return []; // Return an empty array for weekends
-    }    
+    }
 
     $endDate = strtotime(date('Y-m-d', $startDate) . ' ' . END_TIME); // End date for the given day
 
@@ -78,10 +76,10 @@ function generateAvailableSchedules($startDate, $durationInMinutes, $bookedSched
     }
 
     return $availableSchedules;
-    
 }
 
-function generateLongestAvailableSchedules($startDate, $durationOptions, $bookedSchedules) {
+function generateLongestAvailableSchedules($startDate, $durationOptions, $bookedSchedules)
+{
     $availableSchedules = [];
 
     rsort($durationOptions); // Sort durations in descending order
@@ -98,19 +96,20 @@ function generateLongestAvailableSchedules($startDate, $durationOptions, $booked
         // Split the time slots into start and end times
         list($startA, $endA) = explode('-', $a);
         list($startB, $endB) = explode('-', $b);
-    
+
         // Compare start times first
         if ($startA !== $startB) {
             return strcmp($startA, $startB); // Sort alphabetically
         }
-    
+
         // If start times are equal, compare end times
         return strcmp($endB, $endA); // Sort alphabetically
     });
     return $timeSlots;
 }
 
-function populateSchedule($startDateParam, $durationInMinutes, $bookedSchedules = []) {
+function populateSchedule($startDateParam, $durationInMinutes, $bookedSchedules = [])
+{
     $startDate = strtotime($startDateParam . ' ' . START_TIME); // Provide the desired date here
 
     // Check if the provided start date is not in the past for today's schedule before generating schedules
@@ -129,7 +128,7 @@ $bookedSchedules = Reservation::getBookedSchedules();
 
 // Check if the selectedDate is received from the POST request
 if (isset($_POST['selectedDate'])) {
-    error_log('Selected Date:'.$_POST['selectedDate']);
+    error_log('Selected Date:' . $_POST['selectedDate']);
     $selectedDate = $_POST['selectedDate'];
     $schedules = [
         '30' => populateSchedule($selectedDate, 30, $bookedSchedules),

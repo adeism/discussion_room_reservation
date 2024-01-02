@@ -15,14 +15,14 @@ require 'calendar.php';
         $currentDate = date('Y-m-d');
 
         if ($selectedWeek === 'prevWeek') {
-            $calendar->display(date('Y-m-d', strtotime("-1 week", strtotime($currentDate))), 'grey');
+            displayCalendarForDate($calendar, date('Y-m-d', strtotime("-1 week", strtotime($currentDate))));
         } elseif ($selectedWeek === 'nextWeek') {
-            $calendar->display(date('Y-m-d', strtotime("+1 week", strtotime($currentDate))), 'grey');
+            displayCalendarForDate($calendar, date('Y-m-d', strtotime("+1 week", strtotime($currentDate))));
         } else {
-            $calendar->display($currentDate, 'grey');
+            displayCalendarForDate($calendar, $currentDate);
         }
     } else {
-        $calendar->display(date('Y-m-d'), 'grey');
+        displayCalendarForDate($calendar, date('Y-m-d'));
     }
     ?>
 </div>
@@ -31,17 +31,17 @@ require 'calendar.php';
 <script>
     let currentDisplayedDate = '<?php echo date('Y-m-d'); ?>';
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Button click events
-        $('#prevWeekBtn').on('click', function() {
+        $('#prevWeekBtn').on('click', function () {
             changeCalendar('prev');
         });
-        
-        $('#todayWeekBtn').on('click', function() {
+
+        $('#todayWeekBtn').on('click', function () {
             changeCalendar('today');
         });
-        
-        $('#nextWeekBtn').on('click', function() {
+
+        $('#nextWeekBtn').on('click', function () {
             changeCalendar('next');
         });
     });
@@ -70,10 +70,10 @@ require 'calendar.php';
             url: 'index.php?p=reservation_calendar', // Replace with your calendar rendering script
             method: 'POST', // Use POST method
             data: { newDate: date }, // Send newDate as POST data
-            success: function(response) {
+            success: function (response) {
                 $('#calendarContainer').html(response);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });

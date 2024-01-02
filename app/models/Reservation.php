@@ -1,6 +1,7 @@
 <?php
 
-class Reservation {
+class Reservation
+{
     public $reservationId;
     public $name;
     public $memberId;
@@ -29,7 +30,8 @@ class Reservation {
     public $inputDate;
     public $lastUpdate;
 
-    public static function getById($reservationId) {
+    public static function getById($reservationId)
+    {
         global $dbs;
 
         $sql = "SELECT * FROM room_reservations WHERE reservation_id = ?";
@@ -46,7 +48,8 @@ class Reservation {
         }
     }
 
-    public static function getAll() {
+    public static function getAll()
+    {
         global $dbs;
 
         $sql = "SELECT * FROM room_reservations";
@@ -61,9 +64,10 @@ class Reservation {
         }
 
         return $reservations;
-    }   
-    
-    public static function getAllEvents() {
+    }
+
+    public static function getAllEvents()
+    {
         global $dbs;
 
         $sql = "SELECT name, reserved_date, start_time, end_time, activity FROM room_reservations WHERE status != 'cancelled'";
@@ -80,7 +84,7 @@ class Reservation {
                 $reservation->startTime = $row['start_time'];
                 $reservation->endTime = $row['end_time'];
                 $reservation->activity = $row['activity'];
-    
+
                 $events[] = $reservation;
             }
         }
@@ -88,7 +92,8 @@ class Reservation {
         return $events;
     }
 
-    public static function getBookedSchedules() {
+    public static function getBookedSchedules()
+    {
         global $dbs;
 
         $sql = "SELECT reserved_date, start_time, end_time FROM room_reservations WHERE status != 'cancelled' AND status != 'completed'";
@@ -111,7 +116,8 @@ class Reservation {
         return $schedule;
     }
 
-    public static function getBookedSchedules1() {
+    public static function getBookedSchedules1()
+    {
         global $dbs;
 
         $sql = "SELECT reserved_date, start_time, end_time FROM room_reservations";
@@ -134,22 +140,23 @@ class Reservation {
         return $schedule;
     }
 
-    public function save() {
+    public function save()
+    {
         global $dbs;
 
         $sql = "INSERT INTO room_reservations (name, member_id, major, whatsapp_number, reserved_date, duration, start_time, end_time, reservation_document_id, visitor_number, activity, reservation_date, last_update) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+
         $stmt = $dbs->prepare($sql);
         $stmt->bind_param("sissssssiisss", $this->name, $this->memberId, $this->major, $this->whatsAppNumber, $this->reservedDate, $this->duration, $this->startTime, $this->endTime, $this->reservationDocumentId, $this->visitorNumber, $this->activity, $this->reservation_date, $this->reservationLastUpdate);
-        
+
         // Check if the reservation already exists before inserting
         $existingReservation = $this->checkExistingReservation();
 
         if ($existingReservation) {
             // A reservation already exists with the same date, start time, and end time
             return ["success" => false, "message" => "Error: This schedule is already reserved."];
-        }    
+        }
 
         // Proceed with the insertion if no existing reservation is found
         if ($stmt->execute()) {
@@ -160,21 +167,22 @@ class Reservation {
         }
     }
 
-    public function updateReservation() {
+    public function updateReservation()
+    {
         global $dbs;
 
         $sql = "UPDATE room_reservations SET major=?, whatsapp_number=?, reserved_date=?, duration=?, start_time=?, end_time=?, visitor_number=?, activity=?, reservation_document_id=? WHERE reservation_id=?";
-        
+
         $stmt = $dbs->prepare($sql);
         $stmt->bind_param("ssssssisii", $this->major, $this->whatsAppNumber, $this->reservedDate, $this->duration, $this->startTime, $this->endTime, $this->visitorNumber, $this->activity, $this->reservationDocumentId, $this->reservationId);
-        
+
         // Check if the reservation already exists before inserting
         $existingReservation = $this->checkExistingReservation();
 
         if ($existingReservation) {
             // A reservation already exists with the same date, start time, and end time
             return ["success" => false, "message" => "Error: This schedule is already reserved."];
-        }    
+        }
 
         // Proceed with the insertion if no existing reservation is found
         if ($stmt->execute()) {
@@ -185,7 +193,8 @@ class Reservation {
         }
     }
 
-    public function retrieveReservationByMemberId($memberId) {
+    public function retrieveReservationByMemberId($memberId)
+    {
         global $dbs;
 
         $sql = 'SELECT * FROM room_reservations WHERE member_id = ' . $memberId . ';';
@@ -208,7 +217,7 @@ class Reservation {
                 $reservation->endTime = $row['end_time'];
                 $reservation->reservationDocumentId = $row['reservation_document_id'];
                 $reservation->visitorNumber = $row['visitor_number'];
-                $reservation->activity = $row['activity'];    
+                $reservation->activity = $row['activity'];
                 $reservation->status = $row['status'];
                 $reservation->reservationLastUpdate = $row['last_update'];
                 $reservations[] = $reservation;
@@ -218,12 +227,13 @@ class Reservation {
         return $reservations;
     }
 
-    public function insertFile() {
+    public function insertFile()
+    {
         global $dbs;
 
         $sql = "INSERT INTO files (uploader_id, file_title, file_name, file_url, file_dir, file_desc, file_key, mime_type, input_date, last_update) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+
         $stmt = $dbs->prepare($sql);
         $stmt->bind_param("ssssssssss", $this->uploaderId, $this->fileTitle, $this->fileName, $this->fileURL, $this->fileDir, $this->fileDesc, $this->fileKey, $this->mimeType, $this->inputDate, $this->lastUpdate);
 
@@ -236,9 +246,10 @@ class Reservation {
         }
     }
 
-    public function associateFileWithReservation() {
+    public function associateFileWithReservation()
+    {
         global $dbs;
-        
+
         $sql = "UPDATE room_reservations SET reservation_document_id = ? WHERE reservation_id = ?";
         $stmt = $dbs->prepare($sql);
         $stmt->bind_param("ii", $this->reservationDocumentId, $this->reservationId);
@@ -250,36 +261,43 @@ class Reservation {
         }
     }
 
-    public function checkExistingReservation() {
+    public function checkExistingReservation()
+    {
         global $dbs;
-    
+
         $sql = "SELECT * FROM room_reservations 
         WHERE reserved_date = ? 
         AND (
             (start_time <= ? AND end_time >= ?) OR            -- Case: New reservation overlaps existing
             (start_time >= ? AND end_time <= ?) OR            -- Case: New reservation is within existing
-            (start_time < ? AND end_time > ?) OR            -- Case: New reservation's start_time is within existing
-            (start_time < ? AND end_time > ?)               -- Case: New reservation's end_time is within existing
+            (start_time < ? AND end_time > ?) OR              -- Case: New reservation's start_time is within existing
+            (start_time < ? AND end_time > ?)                 -- Case: New reservation's end_time is within existing
         )
         AND status != 'cancelled' AND status != 'completed'";
-    
+
         $stmt = $dbs->prepare($sql);
-        $stmt->bind_param("sssssssss",
-            $this->reservedDate, 
-            $this->startTime, $this->endTime,                  // For overlapping case
-            $this->startTime, $this->endTime,                  // For new reservation within existing
-            $this->startTime, $this->startTime,                // For new reservation's start_time within existing
-            $this->endTime, $this->endTime                     // For new reservation's end_time within existing
+        $stmt->bind_param(
+            "sssssssss",
+            $this->reservedDate,
+            $this->startTime,
+            $this->endTime,                  // For overlapping case
+            $this->startTime,
+            $this->endTime,                  // For new reservation within existing
+            $this->startTime,
+            $this->startTime,                // For new reservation's start_time within existing
+            $this->endTime,
+            $this->endTime                     // For new reservation's end_time within existing
         );
         $stmt->execute();
-    
+
         $result = $stmt->get_result();
         $existingReservations = $result->fetch_all(MYSQLI_ASSOC);
-    
+
         return $existingReservations; // Returns existing reservation data if found, otherwise returns an empty array
     }
 
-    public static function updateStatusForExpiredReservations() {
+    public static function updateStatusForExpiredReservations()
+    {
         global $dbs;
 
         $sql = "UPDATE room_reservations 
@@ -287,25 +305,20 @@ class Reservation {
             WHERE status = 'ongoing' AND 
             (reserved_date < CURRENT_DATE() OR (reserved_date = CURRENT_DATE() AND end_time < CURRENT_TIME()))";
 
-        $result = $dbs->query($sql);
-
-        if ($result) {
-            // echo "Status updated successfully";
-        } else {
-            // echo "Error updating status: " . $dbs->error;
-        }
+        $dbs->query($sql);
     }
 
-    public static function deleteById($reservationId) {
+    public static function deleteById($reservationId)
+    {
         global $dbs;
 
         $sql = "UPDATE room_reservations 
         SET status = 'cancelled', last_update = NOW()
         WHERE reservation_id = ?";
-        
+
         $stmt = $dbs->prepare($sql);
         $stmt->bind_param("i", $reservationId);
-        
+
         if ($stmt->execute()) {
             return true;
         } else {
@@ -313,17 +326,18 @@ class Reservation {
         }
     }
 
-    public static function getFileNameFromMemberId($reservationId) {
+    public static function getFileNameFromMemberId($reservationId)
+    {
         global $dbs;
 
         $sql = "SELECT files.file_name
         FROM room_reservations
         JOIN files ON room_reservations.reservation_document_id = files.file_id
         WHERE room_reservations.reservation_id = ?";
-        
+
         $stmt = $dbs->prepare($sql);
         $stmt->bind_param("i", $reservationId);
-        
+
         if ($stmt->execute()) {
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
