@@ -505,9 +505,11 @@ if ($is_member_login) :
         return $_result;
     }
 
+    // MARK: - Discussion Room Reservasion
     function showDiscussionRoomReservationTab() {
         require DRRB . DS . 'app/member/online_reservation_tab.inc.php';
     }
+    // END: - Discussion Room Reservasion
 
     /*
        * Function to show member collection baskets
@@ -801,10 +803,14 @@ if ($is_member_login) :
                             'text' => __('Loan History'),
                             'link' => 'index.php?p=member&sec=loan_history'
                         ],
+
+                        // MARK: - Discussion Room Reservasion
                         'discussion_room_reservation_tab' => [
                             'text' => __('Discussion Room Reservation'),
                             'link' => 'index.php?p=member&sec=discussion_room_reservation_tab'
                         ],
+                        // END: - Discussion Room Reservasion
+
                         'my_account' => [
                             'text' => __('My Account'),
                             'link' => 'index.php?p=member&sec=my_account'
@@ -847,12 +853,14 @@ if ($is_member_login) :
                             echo '</div>';
                             echo showLoanHist();
                             break;
+                        // MARK: - Discussion Room Reservasion
                         case 'discussion_room_reservation_tab':
                             echo '<div class="tagline">';
                             echo '<div class="memberInfoHead">' . __('Discussion Room Reservation') . '</div>' . "\n";
                             echo '</div>';
                             echo showDiscussionRoomReservationTab();
                             break;
+                        // END: - Discussion Room Reservasion
                         case 'my_account':
                             echo '<div class="tagline">';
                             echo '<div class="memberInfoHead">' . __('Member Detail') . '</div>' . "\n";

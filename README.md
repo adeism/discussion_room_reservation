@@ -16,6 +16,14 @@ Setelah plugin diaktifkan, menu reservasi dapat dilihat di modul **Membership** 
 ### Member Area
 Sesuaikan kode `index_member.php` dengan kode yang ada di file `lib/contents/member.inc.php`.
 Seperti yang tertera pada dokumentasi SLiMS: [Membuat plugin modifikasi halaman pada OPAC](https://slims.web.id/docs/development-guide/Plugin/Membuat-plugin-modifikasi-halaman-pada-OPAC)
+
+Kode-kode yang berhubungan dengan fitur reservasi ruang diskusi pada `index_member.php` diapit oleh komentar:
+```
+// MARK: - Discussion Room Reservasion
+{kode}
+// END: - Discussion Room Reservasion
+```
+
 ![Member Area](docs/member_area.png)
 
 Jika sudah disesuaikan, maka fitur reservasi sudah dapat muncul di halaman member.
