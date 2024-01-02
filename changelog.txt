@@ -1,0 +1,2 @@
+124d02b - Nazar Alwi, 14 seconds ago : Docs: Get rid attendance reservation requirement because we don't need that anymore (based on 2rd interview result with librarian)
+55bd585 - Nazar Alwi, 10 hours ago : Docs: Add requirements document
