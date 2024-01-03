@@ -11,11 +11,6 @@
     ],
     "require": {
         "php": ">=7.4",
-        "altorouter/altorouter": "^2.0",
-        "laminas/laminas-diactoros": "^2.6",
-        "mpscholten/request-parser": "^1.5",
-        "idoalit/sinom": "dev-main",
-        "zein/storage": "dev-main",
         "benhall14/php-calendar": "^1.4"
     },
     "autoload": {
