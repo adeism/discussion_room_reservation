@@ -4,7 +4,7 @@ require DRRB . DS . 'app/models/Reservation.php';
 
 use benhall14\phpCalendar\Calendar as Calendar;
 
-$calendar = new Calendar;
+$calendar = new Calendar();
 $reservationEvents = Reservation::getAllEvents();
 $events = [];
 

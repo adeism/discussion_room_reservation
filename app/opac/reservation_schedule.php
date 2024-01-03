@@ -2,13 +2,13 @@
 require 'calendar.php';
 ?>
 
-<div class="text-right mb-2">
-    <button id="prevWeekBtn" class="btn btn-secondary">Previous Week</button>
-    <button id="todayWeekBtn" class="btn btn-secondary">Today's Week</button>
-    <button id="nextWeekBtn" class="btn btn-secondary">Next Week</button>
+<div class="text-center text-md-right mb-2">
+    <button id="prevWeekBtn" class="btn btn-secondary btn-sm mx-1 mx-md-2">Previous Week</button>
+    <button id="todayWeekBtn" class="btn btn-secondary btn-sm mx-1 mx-md-2">Today's Week</button>
+    <button id="nextWeekBtn" class="btn btn-secondary btn-sm mx-1 mx-md-2">Next Week</button>
 </div>
 
-<div id="calendarContainer">
+<div id="reservationCalendarContainer">
     <?php
     if (isset($_POST["weekSelection"])) {
         $selectedWeek = $_POST["weekSelection"];
@@ -71,7 +71,7 @@ require 'calendar.php';
             method: 'POST', // Use POST method
             data: { newDate: date }, // Send newDate as POST data
             success: function (response) {
-                $('#calendarContainer').html(response);
+                $('#reservationCalendarContainer').html(response);
             },
             error: function (xhr, status, error) {
                 console.error(error);
