@@ -8,23 +8,22 @@ $calendar = new Calendar;
 $reservationEvents = Reservation::getAllEvents();
 $events = [];
 
-function getMinutesAndSecond($time)
-{
-    $timeParts = explode(":", $time);
-    $formattedTime = $timeParts[0] . ":" . $timeParts[1];
-    return $formattedTime;
-}
-
 function displayCalendarForDate($calendar, $date)
 {
     $calendar->display($date, 'grey');
 }
 
+function decrementEndTimeByOneMinute($endTime) 
+{
+    $newTime = date('H:i', strtotime($endTime . ' - 1 minute'));
+    return $newTime;
+}
+
 foreach ($reservationEvents as $event) {
     $events[] = array(
         'start' => $event->reservedDate . ' ' . getMinutesAndSecond($event->startTime),
-        'end' => $event->reservedDate . ' ' . getMinutesAndSecond($event->endTime),
-        'summary' => $event->activity,
+        'end' => $event->reservedDate . ' ' . getMinutesAndSecond(decrementEndTimeByOneMinute($event->endTime)),
+        'summary' => 'Booked',
         'mask' => false,
     );
 }
@@ -32,6 +31,6 @@ foreach ($reservationEvents as $event) {
 $calendar
     ->hideSaturdays()
     ->hideSundays()
-    ->setTimeFormat('08:00', '16:00', 15)
+    ->setTimeFormat('08:00', '15:59', 15)
     ->useWeekView()
     ->addEvents($events);
