@@ -2,10 +2,10 @@
 require 'calendar.php';
 ?>
 
-<div class="text-center text-md-right mb-2">
-    <button id="prevWeekBtn" class="btn btn-secondary btn-sm mx-1 mx-md-2">Previous Week</button>
-    <button id="todayWeekBtn" class="btn btn-secondary btn-sm mx-1 mx-md-2">Today's Week</button>
-    <button id="nextWeekBtn" class="btn btn-secondary btn-sm mx-1 mx-md-2">Next Week</button>
+<div class="text-right text-md-right mb-2">
+    <button id="prevWeekBtn" class="btn btn-secondary btn-sm mx-0 mx-md-1">Previous</button>
+    <button id="todayWeekBtn" class="btn btn-secondary btn-sm mx-0 mx-md-1">Today</button>
+    <button id="nextWeekBtn" class="btn btn-secondary btn-sm mx-0 mx-md-1">Next</button>
 </div>
 
 <div id="reservationCalendarContainer">

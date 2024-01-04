@@ -38,11 +38,7 @@ if (!file_exists(DRRB . DS . 'app/helper/formmaker.inc.php')) {
     echo '</div>';
 } else {
     $majorList = [
-        [
-            'label' => __('S1 T
-        eknik Informatika'),
-            'value' => 'S1 Teknik Informatika'
-        ],
+        ['label' => __('S1 Teknik Informatika'), 'value' => 'S1 Teknik Informatika'],
         ['label' => __('S1 Software Engineering'), 'value' => 'S1 Software Engineering'],
         ['label' => __('S1 Sistem Informasi'), 'value' => 'S1 Sistem Informasi'],
         ['label' => __('S1 Sains Data'), 'value' => 'S1 Sains Data'],
