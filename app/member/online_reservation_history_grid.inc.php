@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="list-group">
     <?php if (count($reservationsHistory) != 0): ?>
         <?php foreach ($reservationsHistory as $reservation): ?>
-            <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 align-items-center justify-content-between">
                     <h5 class="mb-1">
                         <?= $reservation->activity ?>
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <small>Jumlah anggota:
                     <?= $reservation->visitorNumber ?> orang
                 </small>
-            </a>
+            </div>
         <?php endforeach; ?>
     <?php else: ?>
         <div class="alert alert-secondary text-center" role="alert">
