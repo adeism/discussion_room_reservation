@@ -23,7 +23,7 @@ foreach ($reservationEvents as $event) {
     $events[] = array(
         'start' => $event->reservedDate . ' ' . getMinutesAndSecond($event->startTime),
         'end' => $event->reservedDate . ' ' . getMinutesAndSecond(decrementEndTimeByOneMinute($event->endTime)),
-        'summary' => 'Booked',
+        'summary' => $event->memberId,
         'mask' => false,
     );
 }

@@ -70,7 +70,7 @@ class Reservation
     {
         global $dbs;
 
-        $sql = "SELECT name, reserved_date, start_time, end_time, activity FROM room_reservations WHERE status != 'cancelled'";
+        $sql = "SELECT name, reserved_date, member_id, start_time, end_time, activity FROM room_reservations WHERE status != 'cancelled'";
         $result = $dbs->query($sql);
 
         $events = [];
@@ -81,6 +81,7 @@ class Reservation
                 $reservation = new Reservation();
                 $reservation->name = $row['name'];
                 $reservation->reservedDate = $row['reserved_date'];
+                $reservation->memberId = $row['member_id'];
                 $reservation->startTime = $row['start_time'];
                 $reservation->endTime = $row['end_time'];
                 $reservation->activity = $row['activity'];
