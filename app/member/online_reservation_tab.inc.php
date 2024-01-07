@@ -10,6 +10,10 @@ updateStatusForExpiredReservations();
             aria-selected="true">Form</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" id="schedule-tab" data-toggle="tab" href="#schedule" role="tab" aria-controls="schedule"
+            aria-selected="false">Schedule</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list"
             aria-selected="false">List</a>
     </li>
@@ -22,6 +26,9 @@ updateStatusForExpiredReservations();
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="form-tab">
         <?php require DRRB . DS . 'app/member/online_reservation_form.inc.php'; ?>
+    </div>
+    <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="schedule-tab">
+        <?php require DRRB . DS . 'app/opac/reservation_schedule.php'; ?>
     </div>
     <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
         <?php require DRRB . DS . 'app/member/online_reservation_grid.inc.php'; ?>

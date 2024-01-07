@@ -1,8 +1,6 @@
 <?php
 use SLiMS\Filesystems\Storage;
 
-require DRRB . DS . 'app/models/Reservation.php';
-
 function reserveScheduleOnsite($self)
 {
     if (isset($_POST['reserve'])) {

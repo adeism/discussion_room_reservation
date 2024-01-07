@@ -761,13 +761,6 @@ if ($is_member_login) :
     ?>
 
     <div class="d-flex">
-        <div style="width: 16rem;" class="bg-grey-light p-4" id="member_sidebar">
-            <div class="p-4">
-                <img src="<?= $member_image_url ?>" alt="member photo" class="rounded shadow">
-            </div>
-            <a href="index.php?p=member&logout=1" class="btn btn-danger btn-block"><i
-                        class="fas fa-sign-out-alt mr-2"></i><?php echo __('LOGOUT'); ?></a>
-        </div>
         <div class="flex-grow-1 p-4" id="member_content">
             <div class="text-sm text-grey-dark">
                 <?php

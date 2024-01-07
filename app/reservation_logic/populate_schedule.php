@@ -1,5 +1,4 @@
 <?php
-require DRRB . DS . 'app/models/Reservation.php';
 
 define('START_TIME', '08:00');
 define('END_TIME', '16:00');
