@@ -1,4 +1,4 @@
-# Jangan dicoba di server operasional! (testing di slims 9.6.1 : error)
+# HATI-HATI DAN BACA DENGAN TELITI UNTUK INSTALL PLUGIN INI
 
 # Reservasi Ruang Diskusi
 
