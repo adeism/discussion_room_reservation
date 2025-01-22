@@ -1,3 +1,5 @@
+# Jangan dicoba di server operasional! (testing di slims 9.6.1 : error)
+
 # Reservasi Ruang Diskusi
 
 ### Cara Install Plugin
